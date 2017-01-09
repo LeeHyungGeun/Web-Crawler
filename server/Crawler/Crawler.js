@@ -5,6 +5,10 @@ const URL = require('url-parse');
 let START_URL = 'https://join.worksmobile.com/kr/joinup/basicInfo';
 let SEARCH_WORD = 'WORKS MOBILE';
 let contains = [];
+let allAbsoluteLinks = [];
+let allRelativeLinks = [];
+let allAbsoluteJS = [];
+
 crawl(START_URL, SEARCH_WORD);
 function crawl(url, word) {
     request(url, (error, response, body) => {
@@ -15,27 +19,48 @@ function crawl(url, word) {
         //     }
         // });
         
-        getAbsoluteLinks($);
-        console.log(allAbsoluteLinks);
-        console.log(allRelativeLinks);
         
-        // Utils.call($);
-        // console.log($('html').text().contains);
+        getAbsoluteLinks($);
+
+        allAbsoluteLinks.forEach((link, index) => {
+            // console.log(link);
+            crawl(link, word);
+        });
+
+        allRelativeLinks.forEach((link, index) => {
+            // console.log(response);
+            // crawl('https://www.worksmobile.com/' + link, word);
+        });
+
+        allAbsoluteJS.forEach((link, index) => {
+            crawl(link, word);
+            // console.log(link);
+        });
+
+        body.split('\n').forEach((element, index) => {
+            if (element.toString().toLowerCase().indexOf(SEARCH_WORD.toLowerCase()) > -1) {
+                // console.log(element);
+                // contains.push(element);
+            }
+        });
     });
 }
 
-let allAbsoluteLinks = [];
-let allRelativeLinks = [];
+
 function getAbsoluteLinks ($) {
     let absoluteLinks = $('a[href^="http"]');
     // let relativeLinks = $('a[href^="/"]');
     let relativeLinks = $('a[href^="/"]');
+    let absoluteJS = $('script[src^="http"]');
 
     absoluteLinks.each((index, item) => {
         allAbsoluteLinks.push($(item).attr('href'));
     });
     relativeLinks.each((index, item) => {
         allRelativeLinks.push($(item).attr('href'));
+    });
+    absoluteJS.each((index, item) => {
+        allAbsoluteJS.push($(item).attr('src'));
     });
 }
 
