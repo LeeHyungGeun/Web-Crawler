@@ -14,10 +14,18 @@ app.get('/', function(req, res) {
     let search = new Search();
     let filter = new Filter();
     res.send('hello world');
-    let url = req.query.url || 'https://stg-jp1-join.worksmobile.com/kr/joinup/basicInfo';
+    let url = req.query.url || 'https://join.worksmobile.com/kr/joinup/basicInfo';
     console.log(url);
     search.get(url).then((res) => {
-        file.save(res.body, url);
+        // file.save(res.body, url);
+        let $ = res.$;
+        file.save($('img'), url);
+
+        // $('link')
+        // $('script')
+        // $('img')
+
+
         // console.log(filter.isContains(res.html(), '가입'));
 
     });
