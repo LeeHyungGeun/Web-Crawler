@@ -22,19 +22,20 @@ gulp.task('dev', dev);
 gulp.task('default', dev);
 
 function dev() {
-    new WebpackDevServer(webpack(configs.webpack.dev), configs.webpack.dev.devServer)
-    .listen(configs.server.webpack.port, configs.server.webpack.host, function(err) {
-        if (err) {
-            throw new $.util.PluginError('webpack-dev-server', err);
-        }
-        else {
-            gutil.log('[webpack-dev-server]', 'http://' + configs.server.webpack.host + ':' + configs.server.webpack.port + '/webpack-dev-server');
-            // TODO
-            bsServer();
-            nodemonServer();
+    nodemonServer();
+    // new WebpackDevServer(webpack(configs.webpack.dev), configs.webpack.dev.devServer)
+    // .listen(configs.server.webpack.port, configs.server.webpack.host, function(err) {
+    //     if (err) {
+    //         throw new $.util.PluginError('webpack-dev-server', err);
+    //     }
+    //     else {
+    //         gutil.log('[webpack-dev-server]', 'http://' + configs.server.webpack.host + ':' + configs.server.webpack.port + '/webpack-dev-server');
+    //         // TODO
+    //         bsServer();
+    //         nodemonServer();
             
-        }
-    });
+    //     }
+    // });
 }
 function prod(callback) {
     webpack(configs.webpack.prod, function(err, stats) {

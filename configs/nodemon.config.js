@@ -1,6 +1,6 @@
 const path = require('path');
 module.exports = {
-    script: 'server.js',
+    script: path.resolve(__dirname, '../server/server.js'),
     ext: 'js html',
     env: { 'NODE_ENV': 'development' },
     ignore: [
@@ -9,6 +9,7 @@ module.exports = {
     watch: [
         path.resolve(__dirname, '../server/**/*.*')
     ],
-    stdout: false,
-    readable: false
+    stdout: true,
+    readable: true,
+    nodeArgs: ['--debug']
 };
