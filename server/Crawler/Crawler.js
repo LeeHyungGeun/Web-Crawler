@@ -3,7 +3,7 @@ const cheerio = require('cheerio');
 const URL = require('url-parse');
 
 let START_URL = 'https://join.worksmobile.com/kr/joinup/basicInfo';
-let SEARCH_WORD = 'LINE MOBILE';
+let SEARCH_WORD = 'WORKS MOBILE';
 let contains = [];
 crawl(START_URL, SEARCH_WORD);
 function crawl(url, word) {
